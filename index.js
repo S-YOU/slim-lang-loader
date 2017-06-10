@@ -4,12 +4,12 @@ var fs = require("fs")
 var path = require("path")
 
 function compileToSlim(remainingRequest) {
-	return execSync(`slimrb ${remainingRequest}`)
+	return execSync(`slimrb -o attr_list_delims='{"("=>")","["=>"]"}' ${remainingRequest}`)
 }
 
 module.exports = function(source) {
 	this.cacheable && this.cacheable();
-	var remainingRequest = loaderUtils.getRemainingRequest(this);
+	var remainingRequest = loaderUtils.getRemainingRequest(this).split('?')[0];
 	var result;
 	try {
 		result = compileToSlim(remainingRequest);
